@@ -11,8 +11,8 @@ import (
 )
 
 type test struct {
-  lat  string `json:"name" form:"name" query:"name"`
-  lng string `json:"email" form:"email" query:"email"`
+ 	lat string `json:"lat"`
+	lng string `json:"lng"``
 }
 
 func JsonHandler(c echo.Context) (err error) {
@@ -23,7 +23,7 @@ func JsonHandler(c echo.Context) (err error) {
   client, err := mongo.NewClient(options.Client().ApplyURI("localhost:27017"))
   ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
   err = client.Connect(ctx)
-  collection := client.Database("testing").Collection("lat_lng")
+  collection := client.Database("testing").Collection("geo")
   res, err := collection.InsertOne(ctx,t)
   id := res.InsertedID
   return c.String(http.StatusOK, fmt.Sprintf("man amadam with id: %s", id))
